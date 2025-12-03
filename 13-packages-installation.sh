@@ -32,7 +32,7 @@ for i in $@
 do
   echo "package to install: $i"
   apt list --installed $i &>>$LOGFILE
-  if [ $? -eq 0 ]
+  if dpkg-query -W --showformat='${Status}\n' "$i" 2>/dev/null | grep "install ok installed" &>>$LOGFILE;
   then
       echo -e "$i is already installed...$Y SKIPPING $N"
   else
